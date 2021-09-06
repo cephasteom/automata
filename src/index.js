@@ -19,18 +19,19 @@ const createGroup = (x, y) => {
 }
 
 const draw = () => {
+    svg.clear()
     groups = groups
         .map(({walkers}) => {
             if(walkers.every(walker => walker.isOut())) {
-                return null
+                window.cancelAnimationFrame(animationFrame);
             }
             walkers = walkers
                 .map(walker => {
-                    if(walker.isOut()) return null;
-                    walker.velocity().move().draw()
+                    if(!walker.isOut()) walker.velocity().move()
+                    walker.draw();
                     return walker;
                 })
-                .filter(walker => !!walker)
+                // .filter(walker => !!walker)
             return { walkers }
         })
         .filter(group => !!group);

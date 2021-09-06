@@ -2,8 +2,6 @@ import { spline } from './utils.js'
 import { SVG } from '@svgdotjs/svg.js'
 class Walker {
     constructor(x, y, noise) {
-        this.px = x;
-        this.py = y;
         this.x = x;
         this.y = y;
         this.canvasHeight = 1000
@@ -20,7 +18,6 @@ class Walker {
     isOut() {
         const { x, y, canvasHeight, canvasWidth } = this
         return (x < 0 || x > canvasWidth || y < 0 || y > canvasHeight);
-        return false
     }
     velocity () {
         const { noise } = this
@@ -30,18 +27,17 @@ class Walker {
         return this
     }
     move() {
-        const { velocityX, velocityY } = this
+        const { velocityX, velocityY, points } = this
         this.x += velocityX;
         this.y += velocityY;
+        const {x, y} = this
+        points.push({x,y})
         return this
     }
     draw() {
-        const { x, y, px, py, width, height, points, svg } = this
-
-        const pathData = spline([{x: px, y: py}, {x, y}], 1, false);
+        const { points, svg } = this
+        const pathData = spline(points, 1, false);
         svg.path(pathData).stroke("#111").fill("none");
-        this.px = x
-        this.py = y
         return this
     }
 }
