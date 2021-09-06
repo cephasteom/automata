@@ -7,7 +7,7 @@ class Walker {
         this.canvasHeight = canvasSize
         this.canvasWidth = canvasSize
         this.noise = noise
-        this.degree = 0.0075
+        this.degree = 0.005
         this.velocityX = (Math.random() * 4 - 2)
         this.velocityY = (Math.random() * 4 - 2)
         this.opacity = Math.random() * 0.35

@@ -54,8 +54,8 @@ const draw = () => {
 }
 
 const handleClickEvent = (e) => {
-    let start = (Math.random() * 4 - 2) + (size/2)
-    createGroup(start,start)
+    let y = ((size/5)*2.4) - (Math.random() * 10)
+    createGroup(size/2,y)
     if(!isAnimating) {
         animationFrame = window.requestAnimationFrame(animate)
         isAnimating = true
