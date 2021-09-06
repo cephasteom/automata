@@ -28,10 +28,10 @@ class Walker {
         return this
     }
     move() {
-        const { velocityX, velocityY, points } = this
+        const { velocityX, velocityY, canvasHeight, points } = this
         this.x += velocityX;
         this.y += velocityY;
-        this.y = this.y > this.canvasHeight ? this.canvasHeight : this.y
+        this.y = this.y > canvasHeight ? canvasHeight : this.y
         const {x, y} = this
         points.push({x,y})
         return this

@@ -4,7 +4,7 @@ import { Noise } from 'noisejs'
 import { scale } from './js/utils.js'
 import './styles/index.scss'
 
-const nWalkers = 250
+const nWalkers = 100
 const size = 400
 const svg = SVG(".canvas");
 let fps = 25 
@@ -22,7 +22,10 @@ const setupCanvas = () => {
     svg.line(0, fifth*3, size, fifth*3).stroke({ width: 4, color: '#FFF' })
 
     const triangleHeight = (1/2) * Math.sqrt(3) * fifth
-    svg.polygon(`${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
+    svg.polygon(`${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`)
+        .fill('#000')
+        .stroke({ width: 4, color: '#FFF' })
+        .front()
 
     svg.rect(size, (fifth*3) - 2).fill('#000').backward()
     // perspective lines
