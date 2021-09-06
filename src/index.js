@@ -6,7 +6,10 @@ import './styles/index.scss'
 
 const nWalkers = 100
 const svg = SVG(".canvas");
-let groups = [];
+let fps = 25 
+let fpsInterval = 1000 / fps
+let then = Date.now()
+let groups = [ {walkers: []} ];
 let isAnimating = false;
 let noise = new Noise(Math.random())
 let animationFrame = null;
@@ -18,31 +21,34 @@ const createGroup = (x, y) => {
     groups.push({walkers})
 }
 
+const animate = () => {
+    groups.every(walkers => walkers.walkers.every(walker => walker.isOut())) ? null :
+        animationFrame = window.requestAnimationFrame(animate)
+    let now = Date.now();
+    let elapsed = now - then;
+    elapsed > fpsInterval && (then = now - (elapsed % fpsInterval)) && draw();
+}
+
 const draw = () => {
     svg.clear()
     groups = groups
         .map(({walkers}) => {
-            if(walkers.every(walker => walker.isOut())) {
-                window.cancelAnimationFrame(animationFrame);
-            }
             walkers = walkers
                 .map(walker => {
                     if(!walker.isOut()) walker.velocity().move()
                     walker.draw();
                     return walker;
                 })
-                // .filter(walker => !!walker)
             return { walkers }
         })
         .filter(group => !!group);
-    animationFrame = window.requestAnimationFrame(draw)
 }
 
 const handleClickEvent = (e) => {
     // createGroup(e.x, e.y)
-    createGroup(500,500)
+    createGroup(100,100)
     if(!isAnimating) {
-        animationFrame = window.requestAnimationFrame(draw)
+        animationFrame = window.requestAnimationFrame(animate)
         isAnimating = true
     }
 }

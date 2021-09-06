@@ -4,15 +4,15 @@ class Walker {
     constructor(x, y, noise) {
         this.x = x;
         this.y = y;
-        this.canvasHeight = 1000
-        this.canvasWidth = 1000
+        this.canvasHeight = 200
+        this.canvasWidth = 200
         this.noise = noise
-        this.velocityX = (Math.random() * 2 - 2)
-        this.velocityY = (Math.random() * 2 - 2)
-        this.opacity = Math.random() * 0.1
+        this.velocityX = (Math.random() * 4 - 2)
+        this.velocityY = (Math.random() * 4 - 2)
+        this.opacity = Math.random() * 0.35
         this.colour = `rgba(255,255,255,${this.opacity})`
         this.svg = SVG(".canvas");
-        this.points = []
+        this.points = [{x,y}]
         this.draw();
     }
     isOut() {
@@ -21,7 +21,7 @@ class Walker {
     }
     velocity () {
         const { noise } = this
-        let degree = 0.0025
+        let degree = 0.01
         this.velocityX += noise.simplex2(this.x * degree, this.y * degree);
         this.velocityY += noise.simplex2(this.y * degree, this.x * degree);
         return this
@@ -35,9 +35,9 @@ class Walker {
         return this
     }
     draw() {
-        const { points, svg } = this
+        const { points, svg, colour } = this
         const pathData = spline(points, 1, false);
-        svg.path(pathData).stroke("#111").fill("none");
+        svg.path(pathData).stroke(colour).fill("none");
         return this
     }
 }
