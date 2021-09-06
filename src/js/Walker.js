@@ -4,11 +4,11 @@ class Walker {
     constructor(x, y, noise) {
         this.x = x;
         this.y = y;
-        this.canvasHeight = 200
-        this.canvasWidth = 200
+        this.canvasHeight = 400
+        this.canvasWidth = 400
         this.noise = noise
-        this.velocityX = (Math.random() * 4 - 2)
-        this.velocityY = (Math.random() * 4 - 2)
+        this.velocityX = (Math.random() * 10)
+        this.velocityY = (Math.random() * 10)
         this.opacity = Math.random() * 0.35
         this.colour = `rgba(255,255,255,${this.opacity})`
         this.svg = SVG(".canvas");

@@ -4,7 +4,7 @@ import { Noise } from 'noisejs'
 import { spline } from './js/utils.js'
 import './styles/index.scss'
 
-const nWalkers = 100
+const nWalkers = 500
 const svg = SVG(".canvas");
 let fps = 25 
 let fpsInterval = 1000 / fps
@@ -46,7 +46,7 @@ const draw = () => {
 
 const handleClickEvent = (e) => {
     // createGroup(e.x, e.y)
-    createGroup(100,100)
+    createGroup(200,200)
     if(!isAnimating) {
         animationFrame = window.requestAnimationFrame(animate)
         isAnimating = true
@@ -60,6 +60,7 @@ clearBtn.addEventListener('click', e => {
     groups = []
     isAnimating = false
     noise = new Noise(Math.random())
+    svg.clear()
 })
 
 const params = new URLSearchParams(window.location.search);
