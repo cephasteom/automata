@@ -19,12 +19,17 @@ const closeBtn = document.getElementById('close')
 
 const setupCanvas = () => {
     const fifth = size/5
-    let line = svg.line(0, fifth*3, size, fifth*3).stroke({ width: 4, color: '#FFF' })
+    svg.line(0, fifth*3, size, fifth*3).stroke({ width: 4, color: '#FFF' })
 
     const triangleHeight = (1/2) * Math.sqrt(3) * fifth
-    let triangle = svg.polygon(`${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
+    svg.polygon(`${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
 
-    let rect = svg.rect(size, (fifth*2)).fill('#000').move(0, fifth*3)
+    svg.rect(size, (fifth*2)).fill('#000').move(0, fifth*3)
+
+    // perspective lines
+    for(let x = -2000; x <= 2000; x++) {
+        svg.line((size/2), fifth*3, (size/10) * x, size).stroke({ width: 1, color: '#FFF' })
+    }
 }
 
 setupCanvas()
