@@ -4,7 +4,7 @@ import { Noise } from 'noisejs'
 import { spline } from './js/utils.js'
 import './styles/index.scss'
 
-const nWalkers = 100
+const nWalkers = 250
 const size = 500
 const svg = SVG(".canvas");
 let fps = 25 

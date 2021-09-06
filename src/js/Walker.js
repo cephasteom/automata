@@ -8,8 +8,8 @@ class Walker {
         this.canvasWidth = canvasSize
         this.noise = noise
         this.degree = 0.005
-        this.velocityX = (Math.random() * 4 - 2)
-        this.velocityY = (Math.random() * 4 - 2)
+        this.velocityX = (Math.random() * 8 - 4)
+        this.velocityY = (Math.random() * 8 - 4)
         this.opacity = Math.random() * 0.35
         this.colour = `rgba(255,255,255,${this.opacity})`
         this.svg = SVG(".canvas");
@@ -19,7 +19,7 @@ class Walker {
     }
     isOut() {
         const { x, y, canvasHeight, canvasWidth } = this
-        return (x < 0 || x > canvasWidth || y < 0 || y > canvasHeight);
+        return (x < 0 || x > canvasWidth || y < 0 || y > ((canvasHeight/5) * 3));
     }
     velocity () {
         const { noise, degree } = this
