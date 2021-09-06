@@ -4,7 +4,7 @@ class Walker {
     constructor(x, y, noise, canvasSize) {
         this.x = x;
         this.y = y;
-        this.canvasHeight = canvasSize
+        this.canvasHeight = (canvasSize/5) * 3
         this.canvasWidth = canvasSize
         this.noise = noise
         this.degree = 0.005
@@ -19,7 +19,7 @@ class Walker {
     }
     isOut() {
         const { x, y, canvasHeight, canvasWidth } = this
-        return (x < 0 || x > canvasWidth || y < 0 || y > ((canvasHeight/5) * 3));
+        return (x < 0 || x > canvasWidth || y < 0 || y >= canvasHeight);
     }
     velocity () {
         const { noise, degree } = this
@@ -31,6 +31,7 @@ class Walker {
         const { velocityX, velocityY, points } = this
         this.x += velocityX;
         this.y += velocityY;
+        this.y = this.y > this.canvasHeight ? this.canvasHeight : this.y
         const {x, y} = this
         points.push({x,y})
         return this

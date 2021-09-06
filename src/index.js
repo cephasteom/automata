@@ -5,7 +5,7 @@ import { scale } from './js/utils.js'
 import './styles/index.scss'
 
 const nWalkers = 250
-const size = 500
+const size = 400
 const svg = SVG(".canvas");
 let fps = 25 
 let fpsInterval = 1000 / fps
@@ -41,10 +41,10 @@ const createGroup = (x, y) => {
 }
 
 const animate = () => {
-    animationFrame = window.requestAnimationFrame(animate)
     let now = Date.now();
     let elapsed = now - then;
     elapsed > fpsInterval && (then = now - (elapsed % fpsInterval)) && draw();
+    animationFrame = window.requestAnimationFrame(animate)
 }
 
 const draw = () => {
@@ -79,7 +79,7 @@ clearBtn.addEventListener('click', e => {
     setupCanvas()
 })
 
-const params = new URLSearchParams(window.location.search);
-if(!params.get('hideClose')) {
-    closeBtn.classList.remove('hidden')
-}
+// const params = new URLSearchParams(window.location.search);
+// if(!params.get('hideClose')) {
+//     closeBtn.classList.remove('hidden')
+// }
