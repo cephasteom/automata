@@ -1,7 +1,7 @@
 // TODO: auto mode
 
 import Walker from './js/Walker'
-import { canvasCtx } from './js/setup-canvas'
+// import { canvasCtx } from './js/setup-canvas'
 import { Noise } from 'noisejs'
 import './styles/index.scss'
 
@@ -53,12 +53,12 @@ const handleClickEvent = (e) => {
 }
 
 instructions.addEventListener('click', handleClickEvent)
-document.getElementById('canvas').addEventListener('click', handleClickEvent)
+// document.getElementById('canvas').addEventListener('click', handleClickEvent)
 
 clearBtn.addEventListener('click', e => {
     window.cancelAnimationFrame(animationFrame);
     groups = []
-    canvasCtx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+    // canvasCtx.clearRect(0, 0, window.innerWidth, window.innerHeight)
     isAnimating = false
     noise = new Noise(Math.random())
 })

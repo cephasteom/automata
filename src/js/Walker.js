@@ -1,4 +1,4 @@
-import { canvasCtx } from './setup-canvas'
+// import { canvasCtx } from './setup-canvas'
 
 class Walker {
     constructor(x, y, noise) {
@@ -6,7 +6,7 @@ class Walker {
         this.y = y;
         this.px = x;
         this.py = y;
-        this.ctx = canvasCtx
+        // this.ctx = canvasCtx
         this.noise = noise
         this.velocityX = (Math.random() * 2 - 2)
         this.velocityY = (Math.random() * 2 - 2)
@@ -45,12 +45,8 @@ class Walker {
         return this
     }
     draw() {
-        const { ctx, x, y, width, height, px, py } = this
-        ctx.beginPath()
-        ctx.moveTo(px,py);
-        ctx.lineTo(x,y);
-        ctx.strokeStyle = this.colour
-        ctx.stroke()
+        const { x, y, width, height, px, py } = this
+        
         this.px = x
         this.py = y
         return this
