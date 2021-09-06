@@ -1,11 +1,11 @@
-// TODO: auto mode
-
 import Walker from './js/Walker'
-// import { canvasCtx } from './js/setup-canvas'
+import { SVG } from '@svgdotjs/svg.js'
 import { Noise } from 'noisejs'
+import { spline } from './js/utils.js'
 import './styles/index.scss'
 
-const nWalkers = 1000
+const nWalkers = 100
+const svg = SVG(".canvas");
 let groups = [];
 let isAnimating = false;
 let noise = new Noise(Math.random())
@@ -14,9 +14,8 @@ const clearBtn = document.getElementById('clear')
 const closeBtn = document.getElementById('close')
 
 const createGroup = (x, y) => {
-    groups.push({
-        walkers: new Array(nWalkers).fill(null).map(i => new Walker(x, y, noise))
-    })
+    let walkers = new Array(nWalkers).fill(null).map(i => new Walker(x, y, noise))
+    groups.push({walkers})
 }
 
 const draw = () => {
@@ -28,7 +27,7 @@ const draw = () => {
             walkers = walkers
                 .map(walker => {
                     if(walker.isOut()) return null;
-                    walker.velocity().move().reColour().draw()
+                    walker.velocity().move().draw()
                     return walker;
                 })
                 .filter(walker => !!walker)
@@ -39,14 +38,15 @@ const draw = () => {
 }
 
 const handleClickEvent = (e) => {
-    createGroup(e.x, e.y)
+    // createGroup(e.x, e.y)
+    createGroup(500,500)
     if(!isAnimating) {
         animationFrame = window.requestAnimationFrame(draw)
         isAnimating = true
     }
 }
 
-// document.getElementById('canvas').addEventListener('click', handleClickEvent)
+document.querySelector('.canvas').addEventListener('click', handleClickEvent)
 
 clearBtn.addEventListener('click', e => {
     window.cancelAnimationFrame(animationFrame);

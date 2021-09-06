@@ -1,28 +1,26 @@
-// import { canvasCtx } from './setup-canvas'
-
+import { spline } from './utils.js'
+import { SVG } from '@svgdotjs/svg.js'
 class Walker {
     constructor(x, y, noise) {
-        this.x = x;
-        this.y = y;
         this.px = x;
         this.py = y;
-        // this.ctx = canvasCtx
+        this.x = x;
+        this.y = y;
+        this.canvasHeight = 1000
+        this.canvasWidth = 1000
         this.noise = noise
         this.velocityX = (Math.random() * 2 - 2)
         this.velocityY = (Math.random() * 2 - 2)
         this.opacity = Math.random() * 0.1
         this.colour = `rgba(255,255,255,${this.opacity})`
-        this.getCanvasDimensions()
+        this.svg = SVG(".canvas");
+        this.points = []
         this.draw();
-    }
-    getCanvasDimensions() {
-        let canvas = document.getElementById('canvas').getBoundingClientRect()
-        this.canvasHeight = canvas.height
-        this.canvasWidth = canvas.width
     }
     isOut() {
         const { x, y, canvasHeight, canvasWidth } = this
         return (x < 0 || x > canvasWidth || y < 0 || y > canvasHeight);
+        return false
     }
     velocity () {
         const { noise } = this
@@ -37,16 +35,11 @@ class Walker {
         this.y += velocityY;
         return this
     }
-    reColour() {
-        this.opacity = 1
-        // this.red = scale(0, window.innerWidth, 0, 255, this.x)
-        // this.blue = scale(0, window.innerWidth, 0, 255, this.y)
-        // this.colour = `rgba(${this.red},0,${this.blue},${this.opacity/4})`
-        return this
-    }
     draw() {
-        const { x, y, width, height, px, py } = this
-        
+        const { x, y, px, py, width, height, points, svg } = this
+
+        const pathData = spline([{x: px, y: py}, {x, y}], 1, false);
+        svg.path(pathData).stroke("#111").fill("none");
         this.px = x
         this.py = y
         return this

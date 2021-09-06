@@ -13,7 +13,7 @@ $fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
 html {
     font-size: $root-font-size;
     font-family: $font-family;
-    background-color: black;
+    background-color: #333;
 }
 
 body {
@@ -31,7 +31,7 @@ p {
     top: 1em;
     right: 1em;
     border: 1px solid white;
-    background: black;
+    background: transparent;
     color: white;
     padding: 0.5em 1em;
     border-radius: 5px;
@@ -67,6 +67,5 @@ p {
 .canvas {
     width: 75vmin;
     height: 75vmin;
-    background: hsl(0, 0%, 100%);
-
-  }
+    background: #FFF
+}
