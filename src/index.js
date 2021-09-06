@@ -1,10 +1,11 @@
 import Walker from './js/Walker'
-import { SVG } from '@svgdotjs/svg.js'
+import { SVG, Line } from '@svgdotjs/svg.js'
 import { Noise } from 'noisejs'
 import { spline } from './js/utils.js'
 import './styles/index.scss'
 
-const nWalkers = 500
+const nWalkers = 100
+const size = 500
 const svg = SVG(".canvas");
 let fps = 25 
 let fpsInterval = 1000 / fps
@@ -16,37 +17,45 @@ let animationFrame = null;
 const clearBtn = document.getElementById('clear')
 const closeBtn = document.getElementById('close')
 
+const setupCanvas = () => {
+    const fifth = size/5
+    let line = svg.line(0, fifth*3, size, fifth*3).stroke({ width: 4, color: '#FFF' })
+
+    const triangleHeight = (1/2) * Math.sqrt(3) * fifth
+    let triangle = svg.polygon(`${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
+
+    let rect = svg.rect(size, (fifth*2)).fill('#000').move(0, fifth*3)
+}
+
+setupCanvas()
+
 const createGroup = (x, y) => {
-    let walkers = new Array(nWalkers).fill(null).map(i => new Walker(x, y, noise))
+    let walkers = new Array(nWalkers).fill(null).map(i => new Walker(x, y, noise, size))
     groups.push({walkers})
 }
 
 const animate = () => {
-    groups.every(walkers => walkers.walkers.every(walker => walker.isOut())) ? null :
-        animationFrame = window.requestAnimationFrame(animate)
+    animationFrame = window.requestAnimationFrame(animate)
     let now = Date.now();
     let elapsed = now - then;
     elapsed > fpsInterval && (then = now - (elapsed % fpsInterval)) && draw();
 }
 
 const draw = () => {
-    svg.clear()
     groups = groups
         .map(({walkers}) => {
             walkers = walkers
                 .map(walker => {
-                    if(!walker.isOut()) walker.velocity().move()
-                    walker.draw();
+                    if(!walker.isOut()) walker.velocity().move().draw()
                     return walker;
                 })
             return { walkers }
         })
-        .filter(group => !!group);
 }
 
 const handleClickEvent = (e) => {
-    // createGroup(e.x, e.y)
-    createGroup(200,200)
+    let start = (Math.random() * 4 - 2) + (size/2)
+    createGroup(start,start)
     if(!isAnimating) {
         animationFrame = window.requestAnimationFrame(animate)
         isAnimating = true
@@ -61,6 +70,7 @@ clearBtn.addEventListener('click', e => {
     isAnimating = false
     noise = new Noise(Math.random())
     svg.clear()
+    setupCanvas()
 })
 
 const params = new URLSearchParams(window.location.search);
