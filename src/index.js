@@ -24,11 +24,10 @@ const setupCanvas = () => {
     const triangleHeight = (1/2) * Math.sqrt(3) * fifth
     svg.polygon(`${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
 
-    
+    svg.rect(size, (fifth*3) - 2).fill('#000').backward()
     // perspective lines
     for(let x = -20; x < 30; x++) {
         let opacity = x < 6 ? scale(0, -20, 0.5, 0, x) : scale(30, 6, 0, 0.5, x)
-        // let opacity = 0.5
         svg.line((size/2), size/2, (size/10) * x, size).stroke({ width: 1, color: '#FFF' }).opacity(opacity).back()
     }
     svg.rect(size, (fifth*2)).fill('#000').move(0, fifth*3).back()

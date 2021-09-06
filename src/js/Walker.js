@@ -13,7 +13,7 @@ class Walker {
         this.opacity = Math.random() * 0.35
         this.colour = `rgba(255,255,255,${this.opacity})`
         this.svg = SVG(".canvas");
-        this.path = this.svg.path().stroke(this.colour).fill("none").back()
+        this.path = this.svg.path().stroke(this.colour).fill("none").backward()
         this.points = [{x,y}]
         this.draw();
     }
