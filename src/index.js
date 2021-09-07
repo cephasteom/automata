@@ -7,17 +7,12 @@ import './styles/index.scss'
 const nWalkers = 100
 const size = 400
 const svg = SVG(".canvas");
-let fps = 25 
-let fpsInterval = 1000 / fps
-let then = Date.now()
 let groups = [ {walkers: []} ];
-let isAnimating = false;
 let noise = new Noise(Math.random())
-let animationFrame = null;
-const clearBtn = document.getElementById('clear')
+const drawBtn = document.getElementById('draw')
 const closeBtn = document.getElementById('close')
 
-const setupCanvas = () => {
+const resetCanvas = () => {
     svg.clear()
 
     const fifth = size/5
@@ -36,47 +31,23 @@ const setupCanvas = () => {
     svg.rect(size, (fifth*2)).fill('#000').move(0, fifth*3).back()
 }
 
-setupCanvas()
+resetCanvas()
 
 const createGroup = (x, y) => {
     let walkers = new Array(nWalkers).fill(null).map(i => new Walker(x, y, noise, size, (size/5) * 3))
     groups.push({walkers})
 }
 
-const animate = () => {
-    let now = Date.now();
-    let elapsed = now - then;
-    elapsed > fpsInterval && (then = now - (elapsed % fpsInterval)) && draw();
-    animationFrame = window.requestAnimationFrame(animate)
-}
+const draw = () => groups.map(({walkers}) => walkers.map(w => w.draw()))
 
-const draw = () => {
-    // groups.map(({walkers}) => ({
-    //     walkers: walkers.map(walker => walker.isOut() ? 
-    //         walker :
-    //         walker.velocity().move().draw() 
-    //     )
-    // }))
-    groups.map(({walkers}) => walkers.map(w => w.draw()))
-}
-
-const handleClickEvent = (e) => {
+const handleDrawEvent = () => {
+    noise = new Noise(Math.random())
+    resetCanvas()
     createGroup(size/2, ((size/5)*2.4) - (Math.random() * 10))
     draw()
-    // !isAnimating 
-    //     && (animationFrame = window.requestAnimationFrame(animate))
-    //     && (isAnimating = true);
 }
 
-document.querySelector('.canvas').addEventListener('click', handleClickEvent)
-
-clearBtn.addEventListener('click', e => {
-    window.cancelAnimationFrame(animationFrame);
-    groups = []
-    isAnimating = false
-    noise = new Noise(Math.random())
-    setupCanvas()
-})
+drawBtn.addEventListener('click', handleDrawEvent)
 
 // const params = new URLSearchParams(window.location.search);
 // if(!params.get('hideClose')) {
