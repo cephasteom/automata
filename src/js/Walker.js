@@ -13,8 +13,8 @@ class Walker {
         this.opacity = Math.random() * 0.35
         this.colour = `rgba(255,255,255,${this.opacity})`
         this.svg = SVG(".canvas");
-        this.path = this.svg.path().stroke(this.colour).fill("none").backward()
         this.points = [{x,y}]
+        this.path = this.svg.path(this.getPathData(this.points)).stroke(this.colour).fill("none").backward()
         this.calculate()
     }
     isOut() {
@@ -42,10 +42,12 @@ class Walker {
         }
         return this
     }
+    getPathData(points) {
+        return spline(points, 1, false);
+    }
     draw() {
         const { path, points } = this
-        const pathData = spline(points, 1, false);
-        path.plot(pathData);
+        path.plot(this.getPathData(points));
         return this
     }
 }
