@@ -1,11 +1,11 @@
 import { spline } from './utils.js'
 import { SVG } from '@svgdotjs/svg.js'
 class Walker {
-    constructor(x, y, noise, canvasSize) {
+    constructor(x, y, noise, canvasWidth, canvasHeight) {
         this.x = x;
         this.y = y;
-        this.canvasHeight = (canvasSize/5) * 3
-        this.canvasWidth = canvasSize
+        this.canvasWidth = canvasWidth
+        this.canvasHeight = canvasHeight
         this.noise = noise
         this.degree = 0.005
         this.velocityX = (Math.random() * 8 - 4)

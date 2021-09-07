@@ -23,11 +23,9 @@ const setupCanvas = () => {
     const fifth = size/5
     svg.line(0, fifth*3, size, fifth*3).stroke({ width: 4, color: '#FFF' })
 
-    const triangleHeight = (1/2) * Math.sqrt(3) * fifth
-    svg.polygon(`${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`)
-        .fill('#000')
-        .stroke({ width: 4, color: '#FFF' })
-        .front()
+    const triangleHeight = 0.5 * Math.sqrt(3) * fifth
+    const triangle = `${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`
+    svg.polygon(triangle).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
 
     svg.rect(size, (fifth*3) - 2).fill('#000').backward()
     
@@ -41,7 +39,7 @@ const setupCanvas = () => {
 setupCanvas()
 
 const createGroup = (x, y) => {
-    let walkers = new Array(nWalkers).fill(null).map(i => new Walker(x, y, noise, size))
+    let walkers = new Array(nWalkers).fill(null).map(i => new Walker(x, y, noise, size, (size/5) * 3))
     groups.push({walkers})
 }
 
@@ -62,12 +60,10 @@ const draw = () => {
 }
 
 const handleClickEvent = (e) => {
-    let y = ((size/5)*2.4) - (Math.random() * 10)
-    createGroup(size/2,y)
-    if(!isAnimating) {
-        animationFrame = window.requestAnimationFrame(animate)
-        isAnimating = true
-    }
+    createGroup(size/2, ((size/5)*2.4) - (Math.random() * 10))
+    !isAnimating 
+        && (animationFrame = window.requestAnimationFrame(animate))
+        && (isAnimating = true);
 }
 
 document.querySelector('.canvas').addEventListener('click', handleClickEvent)
