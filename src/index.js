@@ -6,14 +6,16 @@ import './styles/index.scss'
 import background1 from './images/pexels-milo-textures-2768398.jpg'
 import background2 from './images/pexels-hoang-le-978462.jpg'
 
+import html2canvas from 'html2canvas';
+
 const nWalkers = 1000
 const size = 400
 const svg = SVG(".canvas");
 let groups = [ {walkers: []} ];
 let noise = new Noise(Math.random())
 const drawBtn = document.getElementById('draw')
-let animationFrame = null
-// const closeBtn = document.getElementById('close')
+const downloadBtn = document.getElementById('download')
+const closeBtn = document.getElementById('close')
 
 const resetCanvas = () => {
     svg.clear()
@@ -43,25 +45,35 @@ const createGroup = (x, y) => {
 
 const draw = () => groups.map(({walkers}) => walkers.map(w => w.draw()))
 
-// const animate = () => {
-//     draw(i % 99 + 1)
-//     animationFrame = requestAnimationFrame(animate)
-// }
-
 const handleDrawEvent = () => {
-    cancelAnimationFrame(animationFrame)
     noise = new Noise(Math.random())
     resetCanvas()
     createGroup(size/2, ((size/5)*2.4) - (Math.random() * 10))
     draw()
 }
 
-drawBtn.addEventListener('click', handleDrawEvent)
+const handleDownloadEvent = () => {
+    let el = document.querySelector(".container")
+    let width = Math.floor(el.getBoundingClientRect().width)
+    let height = Math.floor(el.getBoundingClientRect().height)
+    html2canvas(el, {width, height}).then(canvas => {
+        let link = document.createElement('a');
+        link.download = 'automata.jpeg';
+        link.href = canvas.toDataURL("image/jpeg")
+        link.click();
+    });
+}
 
-// const params = new URLSearchParams(window.location.search);
-// if(!params.get('hideClose')) {
-//     closeBtn.classList.remove('hidden')
-// }
+drawBtn.addEventListener('click', handleDrawEvent)
+downloadBtn.addEventListener('click', handleDownloadEvent)
+
+
+const params = new URLSearchParams(window.location.search);
+if(!params.get('hideClose')) {
+    closeBtn.classList.remove('hidden')
+}
 
 document.querySelector('.background1__img').src = background1
 document.querySelector('.background2__img').src = background2
+
+
