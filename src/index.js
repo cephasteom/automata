@@ -4,8 +4,9 @@ import { Noise } from 'noisejs'
 import { scale } from './js/utils.js'
 import './styles/index.scss'
 import background1 from './images/pexels-milo-textures-2768398.jpg'
+import background2 from './images/pexels-hoang-le-978462.jpg'
 
-const nWalkers = 100
+const nWalkers = 1000
 const size = 400
 const svg = SVG(".canvas");
 let groups = [ {walkers: []} ];
@@ -24,7 +25,7 @@ const resetCanvas = () => {
     const triangle = `${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`
     svg.polygon(triangle).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
 
-    svg.rect(size, (fifth*3) - 2).fill('#000').backward()
+    // svg.rect(size, (fifth*3) - 2).fill('#000').backward()
     
     for(let x = -20; x < 30; x++) {
         let opacity = x < 6 ? scale(0, -20, 0.5, 0, x) : scale(30, 6, 0, 0.5, x)
@@ -62,6 +63,5 @@ drawBtn.addEventListener('click', handleDrawEvent)
 //     closeBtn.classList.remove('hidden')
 // }
 
-// Appending to the DOM
-const image = document.querySelector('.background1__img')
-image.src = background1
+document.querySelector('.background1__img').src = background1
+document.querySelector('.background2__img').src = background2
