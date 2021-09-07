@@ -47,7 +47,7 @@ class Walker {
     }
     draw() {
         const { path, points } = this
-        path.plot(this.getPathData(points));
+        path.plot(this.getPathData(points))
         return this
     }
 }

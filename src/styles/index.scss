@@ -64,8 +64,29 @@ p {
     height: 100vh;
     width: 100vw;
 }
-.canvas {
+
+.container {
     width: 75vmin;
     height: 75vmin;
-    background: #000
+    overflow: hidden;
+    position: relative;
+    background: #000;
+    z-index: -20;
+}
+.canvas {
+    width: 100%;
+    height: 100%;
+}
+
+
+.background1 {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    z-index: -10;
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.5;
+    }
 }
