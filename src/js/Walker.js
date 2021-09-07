@@ -15,13 +15,13 @@ class Walker {
         this.svg = SVG(".canvas");
         this.path = this.svg.path().stroke(this.colour).fill("none").backward()
         this.points = [{x,y}]
-        this.draw();
+        this.calculate()
     }
     isOut() {
         const { x, y, canvasHeight, canvasWidth } = this
         return (x < 0 || x > canvasWidth || y < 0 || y >= canvasHeight);
     }
-    velocity () {
+    velocity() {
         const { noise, degree } = this
         this.velocityX += noise.simplex2(this.x * degree, this.y * degree);
         this.velocityY += noise.simplex2(this.y * degree, this.x * degree);
@@ -35,6 +35,11 @@ class Walker {
         const {x, y} = this
         points.push({x,y})
         return this
+    }
+    calculate() {
+        for(var x = 0; x < 100; x++) {
+            !this.isOut() && this.velocity().move();
+        }
     }
     draw() {
         const { path, points } = this

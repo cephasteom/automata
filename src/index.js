@@ -51,19 +51,21 @@ const animate = () => {
 }
 
 const draw = () => {
-    groups.map(({walkers}) => ({
-        walkers: walkers.map(walker => walker.isOut() ? 
-            walker :
-            walker.velocity().move().draw() 
-        )
-    }))
+    // groups.map(({walkers}) => ({
+    //     walkers: walkers.map(walker => walker.isOut() ? 
+    //         walker :
+    //         walker.velocity().move().draw() 
+    //     )
+    // }))
+    groups.map(({walkers}) => walkers.map(w => w.draw()))
 }
 
 const handleClickEvent = (e) => {
     createGroup(size/2, ((size/5)*2.4) - (Math.random() * 10))
-    !isAnimating 
-        && (animationFrame = window.requestAnimationFrame(animate))
-        && (isAnimating = true);
+    draw()
+    // !isAnimating 
+    //     && (animationFrame = window.requestAnimationFrame(animate))
+    //     && (isAnimating = true);
 }
 
 document.querySelector('.canvas').addEventListener('click', handleClickEvent)
