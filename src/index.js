@@ -10,7 +10,7 @@ const svg = SVG(".canvas");
 let groups = [ {walkers: []} ];
 let noise = new Noise(Math.random())
 const drawBtn = document.getElementById('draw')
-const closeBtn = document.getElementById('close')
+// const closeBtn = document.getElementById('close')
 
 const resetCanvas = () => {
     svg.clear()
