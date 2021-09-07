@@ -18,6 +18,8 @@ const clearBtn = document.getElementById('clear')
 const closeBtn = document.getElementById('close')
 
 const setupCanvas = () => {
+    svg.clear()
+
     const fifth = size/5
     svg.line(0, fifth*3, size, fifth*3).stroke({ width: 4, color: '#FFF' })
 
@@ -28,7 +30,7 @@ const setupCanvas = () => {
         .front()
 
     svg.rect(size, (fifth*3) - 2).fill('#000').backward()
-    // perspective lines
+    
     for(let x = -20; x < 30; x++) {
         let opacity = x < 6 ? scale(0, -20, 0.5, 0, x) : scale(30, 6, 0, 0.5, x)
         svg.line((size/2), size/2, (size/10) * x, size).stroke({ width: 1, color: '#FFF' }).opacity(opacity).back()
@@ -51,15 +53,12 @@ const animate = () => {
 }
 
 const draw = () => {
-    groups = groups
-        .map(({walkers}) => {
-            walkers = walkers
-                .map(walker => {
-                    if(!walker.isOut()) walker.velocity().move().draw()
-                    return walker;
-                })
-            return { walkers }
-        })
+    groups.map(({walkers}) => ({
+        walkers: walkers.map(walker => walker.isOut() ? 
+            walker :
+            walker.velocity().move().draw() 
+        )
+    }))
 }
 
 const handleClickEvent = (e) => {
@@ -78,7 +77,6 @@ clearBtn.addEventListener('click', e => {
     groups = []
     isAnimating = false
     noise = new Noise(Math.random())
-    svg.clear()
     setupCanvas()
 })
 
