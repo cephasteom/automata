@@ -40,6 +40,7 @@ class Walker {
         for(var x = 0; x < 100; x++) {
             !this.isOut() && this.velocity().move();
         }
+        return this
     }
     draw() {
         const { path, points } = this
