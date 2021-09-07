@@ -54,14 +54,17 @@ const handleDrawEvent = () => {
 
 const handleDownloadEvent = () => {
     let el = document.querySelector(".container")
+    el.classList.add('container__large')
     let width = Math.floor(el.getBoundingClientRect().width)
     let height = Math.floor(el.getBoundingClientRect().height)
-    html2canvas(el, {width, height}).then(canvas => {
+    html2canvas(el, {width, height})
+    .then(canvas => {
         let link = document.createElement('a');
         link.download = 'automata.jpeg';
         link.href = canvas.toDataURL("image/jpeg")
         link.click();
-    });
+    })
+    .then(() => el.classList.remove('container__large'));
 }
 
 drawBtn.addEventListener('click', handleDrawEvent)

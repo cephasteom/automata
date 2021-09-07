@@ -77,6 +77,11 @@ p {
     position: relative;
     background: #000;
     z-index: -20;
+    &__large {
+        position: absolute;
+        width: 3000px;
+        height: 3000px;
+    }
 }
 .canvas {
     width: 100%;
