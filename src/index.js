@@ -5,6 +5,8 @@ import { scale } from './js/utils.js'
 import './styles/index.scss'
 import background1 from './images/pexels-milo-textures-2768398.jpg'
 import background2 from './images/pexels-hoang-le-978462.jpg'
+import SvgSaver from 'svgsaver';                 // if using CommonJS environment
+
 
 import html2canvas from 'html2canvas';
 
@@ -15,6 +17,7 @@ let groups = [ {walkers: []} ];
 let noise = new Noise(Math.random())
 const drawBtn = document.getElementById('draw')
 const downloadBtn = document.getElementById('download')
+const downloadSVGBtn = document.getElementById('download-svg')
 const closeBtn = document.getElementById('close')
 
 const resetCanvas = () => {
@@ -27,13 +30,13 @@ const resetCanvas = () => {
     const triangle = `${fifth*2},${fifth*3} ${size/2},${(fifth*3) - triangleHeight} ${fifth*3},${fifth*3}`
     svg.polygon(triangle).fill('#000').stroke({ width: 4, color: '#FFF' }).front()
 
-    // svg.rect(size, (fifth*3) - 2).fill('#000').backward()
+    svg.rect(size, (fifth*3) - 2).fill('#000').backward()
     
     for(let x = -20; x < 30; x++) {
         let opacity = x < 6 ? scale(0, -20, 0.5, 0, x) : scale(30, 6, 0, 0.5, x)
         svg.line((size/2), size/2, (size/10) * x, size).stroke({ width: 1, color: '#FFF' }).opacity(opacity).back()
     }
-    // svg.rect(size, (fifth*2)).fill('#000').move(0, fifth*3).back()
+    svg.rect(size, (fifth*2)).fill('#000').move(0, fifth*3).back()
 }
 
 resetCanvas()
@@ -67,8 +70,15 @@ const handleDownloadEvent = () => {
     .then(() => el.classList.remove('container__large'));
 }
 
+const handleDownloadSVG = () => {
+    let svgsaver = new SvgSaver();                      // creates a new instance
+    let svg = document.querySelector('.canvas');         // find the SVG element
+    svgsaver.asSvg(svg);                                // save as SVG
+}
+
 drawBtn.addEventListener('click', handleDrawEvent)
 downloadBtn.addEventListener('click', handleDownloadEvent)
+downloadSVGBtn.addEventListener('click', handleDownloadSVG)
 
 
 const params = new URLSearchParams(window.location.search);
@@ -76,7 +86,7 @@ if(!params.get('hideClose')) {
     closeBtn.classList.remove('hidden')
 }
 
-document.querySelector('.background1__img').src = background1
-document.querySelector('.background2__img').src = background2
+// document.querySelector('.background1__img').src = background1
+// document.querySelector('.background2__img').src = background2
 
 
