@@ -5,6 +5,8 @@ import { scale } from './js/utils.js'
 import './styles/index.scss'
 import background1 from './images/pexels-milo-textures-2768398.jpg'
 import background2 from './images/pexels-hoang-le-978462.jpg'
+import SvgSaver from 'svgsaver';                 // if using CommonJS environment
+
 
 import html2canvas from 'html2canvas';
 
@@ -15,6 +17,7 @@ let groups = [ {walkers: []} ];
 let noise = new Noise(Math.random())
 const drawBtn = document.getElementById('draw')
 const downloadBtn = document.getElementById('download')
+const downloadSVGBtn = document.getElementById('download-svg')
 const closeBtn = document.getElementById('close')
 
 const resetCanvas = () => {
@@ -67,8 +70,15 @@ const handleDownloadEvent = () => {
     .then(() => el.classList.remove('container__large'));
 }
 
+const handleDownloadSVG = () => {
+    let svgsaver = new SvgSaver();                      // creates a new instance
+    let svg = document.querySelector('.canvas');         // find the SVG element
+    svgsaver.asSvg(svg);                                // save as SVG
+}
+
 drawBtn.addEventListener('click', handleDrawEvent)
 downloadBtn.addEventListener('click', handleDownloadEvent)
+downloadSVGBtn.addEventListener('click', handleDownloadSVG)
 
 
 const params = new URLSearchParams(window.location.search);
